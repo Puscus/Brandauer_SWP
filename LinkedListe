@@ -1,0 +1,63 @@
+import random
+
+class Node:
+    def __init__(self, data: int):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+    
+    def append(self, data: int):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+        self.size += 1
+    
+    def length(self) -> int:
+        return self.size
+    
+    def display(self):
+        elements = []
+        current = self.head
+        while current:
+            elements.append(current.data)
+            current = current.next
+        print("Linked List:", " -> ".join(map(str, elements)))
+    
+    def __iter__(self):
+        self._iter_node = self.head
+        return self
+    
+    def __next__(self):
+        if self._iter_node is None:
+            raise StopIteration
+        data = self._iter_node.data
+        self._iter_node = self._iter_node.next
+        return data
+
+if __name__ == "__main__":
+    linked_list = LinkedList()
+    
+    # Füllen der Liste mit 10 zufälligen Ganzzahlen
+    for _ in range(10):
+        linked_list.append(random.randint(1, 100))
+    
+    # Ausgabe der Liste
+    linked_list.display()
+    
+    # Ausgabe der Länge
+    print("Länge der Linked List:", linked_list.length())
+    
+    # Iteration über die Liste
+    print("Iterieren über die Liste:")
+    for value in linked_list:
+        print(value, end=" ")
+    print()
